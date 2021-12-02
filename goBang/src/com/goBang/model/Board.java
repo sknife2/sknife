@@ -54,7 +54,7 @@ public class Board extends JPanel implements checkBoardService.size {
                 //Graphics2D g2=(Graphics2D)gs;
                for(int i=0;i<row;i++){
                     for(int j=0;j<column;j++){
-                        if(isolation[i][j]=='1'){
+                        if(isolation[j][i]=='1'){
                             //gs.setColor(Color.BLACK);
                             //gs.fillOval(i*size,j*size,size,size);
                             try {
@@ -70,7 +70,7 @@ public class Board extends JPanel implements checkBoardService.size {
                                 System.out.println("File read error:"+e);
                             }
                         }//black chess
-                        else if(isolation[i][j]=='2'){
+                        else if(isolation[j][i]=='2'){
                             //gs.setColor(Color.WHITE);
                             //gs.fillOval(i*size,j*size,size,size);
                             try {
@@ -140,6 +140,14 @@ public class Board extends JPanel implements checkBoardService.size {
             for(int j=0;j<column;++j){
                isolation[i][j]='0';
             }
+        }
+    }
+    void print(){
+        for(int i=0;i<row;++i){
+            for(int j=0;j<column;++j){
+                System.out.print(isolation[i][j]+"");
+            }
+            System.out.println();
         }
     }
 

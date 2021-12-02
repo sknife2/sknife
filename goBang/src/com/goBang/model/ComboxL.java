@@ -17,13 +17,10 @@ public class ComboxL implements ItemListener {
         frameL fL = new frameL(f);
         f.left.addMouseListener(fL);
     }
-
     @Override
     public void itemStateChanged(ItemEvent e) {
         if (e.getItem().toString().equals("自由开局")) {
-
             } else if (e.getItem().toString().equals("指定开局")) {
-
             }
         }
 
