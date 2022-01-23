@@ -2,6 +2,7 @@ package com.goBang.model;
 import checkBoardService.checkBoardServiceImpl.judgeServiceImpl;
 import checkBoardService.judgeService;
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 public class frameL implements checkBoardService.size, MouseListener {
@@ -34,50 +35,67 @@ public class frameL implements checkBoardService.size, MouseListener {
         if(f.countx>=15||f.county>=15){
             JOptionPane.showMessageDialog(null,"请点击正确的位置");
         }
-        else if(f.isolation[f.county][f.countx]!='0'){
+        else if(f.isolation[f.countx][f.county]!='0'){
             JOptionPane.showMessageDialog(null, "此处已经有棋子了，请下在其它地方");
+            //System.out.println(countx+" "+county+"  "+f.isolation[countx][county]);
         }
         else {
+            JLabel l;
+            int x1=f.countx*size;
+            int x2=f.county*size;
             if(f.turn==1){
-                f.isolation[f.county][f.countx]='1';
+                f.isolation[f.countx][f.county]='1';
+                f.chessboard[f.countx][f.county]='1';
                 f.turn++;
             }
             else{
-                f.isolation[f.county][f.countx]='2';
+                f.isolation[f.countx][f.county]='2';
+                f.chessboard[f.countx][f.county]='2';
                 f.turn--;
             }
             f.left.repaint();
+            judgeService js = new judgeServiceImpl();
+            //System.out.println(f.countx + "   " + f.county);
+            // System.out.println(js.judge(f, f.countx, f.county, c));
+            //返回值有4中情况：1为没有任何状况、2为禁手、3为输、4为赢
+            switch (js.judge(f, f.countx, f.county, c)) {
+                case 1:
+                    break;
+                case 2:
+                    JOptionPane.showMessageDialog(null, "黑方禁手,黑方输");
+                    f.clear();
+                    f.turn=1;
+                    break;
+                case 3:
+                    if(c=='1') JOptionPane.showMessageDialog(null, "黑方输");
+                    else JOptionPane.showMessageDialog(null, "白方输");
+                    f.clear();
+                    f.turn=1;
+                    break;
+                case 4:
+                    if(c=='1')JOptionPane.showMessageDialog(null, "黑方赢");
+                    else JOptionPane.showMessageDialog(null, "白方赢");
+                    f.clear();
+                    f.turn=1;
+                    break;
+            }
+           //System.out.println(f.turn);
+            AI ai;
+            Point p=new Point();
+            if (f.turn == 1) {
+                c = '2';
+                ai=new AI(f,'1');
+                f.turn++;
+            } else {
+                c = '1';
+                ai=new AI(f,'2');
+
+                f.turn--;
+            }
+            ai.Alpha_Beta();
+            f.left.repaint();
         }
-        judgeService js = new judgeServiceImpl();
-        //System.out.println(f.countx + "   " + f.county);
-        // System.out.println(js.judge(f, f.countx, f.county, c));
-        //返回值有4中情况：1为没有任何状况、2为禁手、3为输、4为赢
-        switch (js.judge(f,f.county,f.countx, c)) {
-            case 1:
-                break;
-            case 2:
-                JOptionPane.showMessageDialog(null, "黑方禁手,黑方输");
-                f.clear();
-                f.turn=1;
-                break;
-            case 3:
-                if(c=='1') JOptionPane.showMessageDialog(null, "黑方输");
-                else JOptionPane.showMessageDialog(null, "白方输");
-                f.clear();
-                f.turn=1;
-                break;
-            case 4:
-                if(c=='1')JOptionPane.showMessageDialog(null, "黑方赢");
-                else JOptionPane.showMessageDialog(null, "白方赢");
-                f.clear();
-                f.turn=1;
-                break;
-        }
-        if (f.turn == 1) {
-        } else if(f.turn==2) {
-            f.turn--;
-        }
-        f.print();
+       //f.print();
     }
     @Override
     public void mousePressed(MouseEvent e) {

@@ -1,15 +1,6 @@
 package com.goBang.model;
-
-import checkBoardService.*;
-import checkBoardService.checkBoardServiceImpl.judgeServiceImpl;
-
-import javax.naming.SizeLimitExceededException;
-import javax.swing.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.ItemListener;
-
 public class ComboxL implements ItemListener {
     public Board f;
     public ComboxL(Board ft) {
@@ -19,8 +10,13 @@ public class ComboxL implements ItemListener {
     }
     @Override
     public void itemStateChanged(ItemEvent e) {
-        if (e.getItem().toString().equals("自由开局")) {
-            } else if (e.getItem().toString().equals("指定开局")) {
+        if (e.getItem().toString().equals("先手")) {
+            f.clear();
+            f.left.repaint();
+            } else if (e.getItem().toString().equals("后手")) {
+            f.isolation[7][7]=f.chessboard[7][7]='1';
+            f.left.repaint();
+            f.turn++;
             }
         }
 

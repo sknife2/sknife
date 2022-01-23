@@ -1,10 +1,6 @@
 package com.goBang.model;
-
-import checkBoardService.size;
-
-import java.awt.event.*;
-import java.awt.*;
-import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class buttonL implements checkBoardService.size, ActionListener {
     public  Board f;
@@ -13,9 +9,7 @@ public class buttonL implements checkBoardService.size, ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        if(e.getActionCommand().equals("认输")){
-            if(f.turn==1) JOptionPane.showMessageDialog(null, "黑方赢");
-            else JOptionPane.showMessageDialog(null, "白方赢");
+        if(e.getActionCommand().equals("重新开始")){
             f.clear();
             f.turn=1;
             f.left.repaint();

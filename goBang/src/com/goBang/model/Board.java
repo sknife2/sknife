@@ -13,6 +13,7 @@ public class Board extends JPanel implements checkBoardService.size {
     public  int countx;//mouse x
     public int county;//mouse y
     public char [][]isolation=new char[row][column];//chess board
+    public char [][]chessboard=new char[row][column];
     JPanel left;
     JPanel right;
     public Board(String s){
@@ -32,6 +33,7 @@ public class Board extends JPanel implements checkBoardService.size {
         for(int i=0;i<row;++i){
             for(int j=0;j<column;++j){
                 isolation[i][j]='0';
+                chessboard[i][j]='0';
             }
         }
         left =new JPanel(){
@@ -54,7 +56,7 @@ public class Board extends JPanel implements checkBoardService.size {
                 //Graphics2D g2=(Graphics2D)gs;
                for(int i=0;i<row;i++){
                     for(int j=0;j<column;j++){
-                        if(isolation[j][i]=='1'){
+                        if(isolation[i][j]=='1'){
                             //gs.setColor(Color.BLACK);
                             //gs.fillOval(i*size,j*size,size,size);
                             try {
@@ -70,7 +72,7 @@ public class Board extends JPanel implements checkBoardService.size {
                                 System.out.println("File read error:"+e);
                             }
                         }//black chess
-                        else if(isolation[j][i]=='2'){
+                        else if(isolation[i][j]=='2'){
                             //gs.setColor(Color.WHITE);
                             //gs.fillOval(i*size,j*size,size,size);
                             try {
@@ -103,7 +105,7 @@ public class Board extends JPanel implements checkBoardService.size {
         right.setPreferredSize(dim1);
         game.add(right,BorderLayout.EAST);
         right.setLayout(new FlowLayout());
-        String  butname= "认输";
+        String  butname= "重新开始";
         JButton button=new JButton(butname);
         button.setPreferredSize(dim3);
         button.setBackground(Color.white);
@@ -114,7 +116,7 @@ public class Board extends JPanel implements checkBoardService.size {
         buttonL butListen=new buttonL(this);
         //对每一个按钮都添加同一个状态事件的监听处理机制
         button.addActionListener(butListen);//添加发生操作的监听方法
-        String []st={"指定开局","自由开局"};
+        String []st={"先手","后手"};
         JComboBox box=new JComboBox(st);
         ComboxL boxListen=new ComboxL(this);
         box.addItemListener(boxListen);
@@ -135,20 +137,20 @@ public class Board extends JPanel implements checkBoardService.size {
         game.setResizable(false);
         game.setVisible(true);
     }
-    void clear(){
-        for(int i=0;i<row;++i){
-            for(int j=0;j<column;++j){
-               isolation[i][j]='0';
-            }
-        }
-    }
     void print(){
         for(int i=0;i<row;++i){
             for(int j=0;j<column;++j){
-                System.out.print(isolation[i][j]+"");
+               System.out.print(isolation[i][j]+"  ");
             }
             System.out.println();
         }
     }
-
+    void clear(){
+        for(int i=0;i<row;++i){
+            for(int j=0;j<column;++j){
+               isolation[i][j]='0';
+               chessboard[i][j]='0';
+            }
+        }
+    }
 }
